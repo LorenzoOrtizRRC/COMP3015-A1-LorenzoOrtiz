@@ -15,6 +15,8 @@ public abstract class State : ScriptableObject
 
     public void Initialize() => StateStatus = false;
 
+    public abstract bool CheckCondition();  // return true when condition is met. if true, StateMachine ticks DoState
+
     // return true when logic ends.
     public virtual bool DoState()
     {
@@ -25,6 +27,4 @@ public abstract class State : ScriptableObject
         // state executes logic either once or until a condition is met (i.e. while, do while)
         // using an Action instead to check if states are finished
     }
-
-    public abstract bool DoLogic();
 }
