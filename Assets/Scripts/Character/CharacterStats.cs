@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum Faction { Cats = 0, Dogs = 1}
 
-public class CharacterStats : MonoBehaviour
+[CreateAssetMenu(fileName = "New Character Stats", menuName = "Character/Character Stats")]
+public class CharacterStats : ScriptableObject
 {
     [SerializeField] private string _characterName = "UnitName";
     [SerializeField] private float _maxHealth = 1f;
