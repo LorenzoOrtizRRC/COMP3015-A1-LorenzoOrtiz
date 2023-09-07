@@ -25,12 +25,15 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // despawn after lifetime expires.
         _elapsedLifetime += Time.deltaTime;
         if (_elapsedLifetime >= _projectileLifetime) DestroyProjectile();
     }
 
     private void InitializeProjectile(CharacterStats projectileOwner, float damage, float lifetime, float speed)
     {
+        // assign variables from WeaponData that spawned it.
+        // The projectile script doesn't hold these variables because they're only in charge of art and collisions. Actual behavior is in WeaponData. Subject to change.
         _projectileOwner = projectileOwner;
         _damage = damage;
         _projectileLifetime = lifetime;
@@ -45,11 +48,12 @@ public class Projectile : MonoBehaviour
     private void DamageTarget(CharacterAgent targetHit)
     {
         targetHit.OnHitTaken?.Invoke(_damage);
+        DestroyProjectile();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<CharacterStats>().CurrentFaction != _projectileOwner.CurrentFaction)
-            DamageTarget();
+        if (collision.gameObject.TryGetComponent(out CharacterAgent targetHit))
+            DamageTarget(targetHit);
     }
 }
