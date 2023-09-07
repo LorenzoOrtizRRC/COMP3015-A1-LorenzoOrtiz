@@ -17,7 +17,7 @@ public class StateMachine
     [SerializeField] private State _chaseState;
     [SerializeField] private State _attackState;
     [Header("AI Variables")]
-    [SerializeField] private CharacterData _targetCharacter;
+    [SerializeField] private CharacterStats _targetCharacter;
 
     private State _currentState = null;
 

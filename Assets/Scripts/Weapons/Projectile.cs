@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
 
     // data from projectile owner
-    private CharacterData _projectileOwner;
+    private CharacterStats _projectileOwner;
     private float _damage = 1f;
     private float _projectileLifetime = 3f;
     private float _projectileSpeed = 1f;
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
         if (_elapsedLifetime >= _projectileLifetime) DestroyProjectile();
     }
 
-    private void InitializeProjectile(CharacterData projectileOwner, float damage, float lifetime, float speed)
+    private void InitializeProjectile(CharacterStats projectileOwner, float damage, float lifetime, float speed)
     {
         _projectileOwner = projectileOwner;
         _damage = damage;
@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<CharacterData>().CurrentFaction != _projectileOwner.CurrentFaction)
+        if (collision.gameObject.GetComponent<CharacterStats>().CurrentFaction != _projectileOwner.CurrentFaction)
             DamageTarget();
     }
 }
