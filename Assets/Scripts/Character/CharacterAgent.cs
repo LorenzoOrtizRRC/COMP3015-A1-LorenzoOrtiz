@@ -7,7 +7,7 @@ public class CharacterAgent : MonoBehaviour
 {
     // This script is responsible for keeping track of a character's live data whilst in-game.
     public Action<float> OnDamageTaken; // when health is reduced (damage taken has been calculated)
-    public Action<float> OnHitTaken;    // when a hostile projectile hits this character
+    public Action<float> OnHitTaken;    // when a hostile projectile hits this character. Takes in pre-mitigated/raw damage.
     public Action OnDeath;  // when character dies
 
     public CharacterStats Stats => _stats;
@@ -17,6 +17,7 @@ public class CharacterAgent : MonoBehaviour
 
     // variables for live tracking in-game
     private float _currentHealth;
+    private float _weaponTimer = 0f;    // timer for weapon cooldowns (based on weapon's rate of fire)
 
     // Start is called before the first frame update
     void Start()
@@ -25,16 +26,14 @@ public class CharacterAgent : MonoBehaviour
         OnHitTaken += DamageCharacter;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void DamageCharacter(float incomingDamage)
     {
         float damageTaken = Mathf.Clamp(incomingDamage - Stats.Armor, 1f, Mathf.Infinity);  // current damage formula
-        if ((_currentHealth -= damageTaken) <= 0f) KillCharacter();
+        if ((_currentHealth -= damageTaken) <= 0f)
+        {
+            OnDamageTaken(damageTaken);
+            KillCharacter();
+        }
     }
 
     private void KillCharacter()

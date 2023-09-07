@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     [SerializeField] private float _weaponDamage = 1f;
+    [SerializeField] private float _weaponSpeed = 1f;   // rate of fire: bullets per second. formula: Bullets/1second
     [SerializeField] private float _minDistanceThreshold = 1f;  // weapon range used by AI. serves as activation condition.
     [SerializeField] private float _maxDistanceThreshold = 10f; // weapon range used by AI. serves as activation condition.
     [SerializeField] private float _projectileSpeed = 3f;

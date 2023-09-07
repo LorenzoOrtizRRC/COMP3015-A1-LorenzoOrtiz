@@ -42,9 +42,9 @@ public class Projectile : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void DamageTarget()
+    private void DamageTarget(CharacterAgent targetHit)
     {
-        // implementation here
+        targetHit.OnHitTaken?.Invoke(_damage);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
