@@ -27,4 +27,14 @@ public abstract class State : ScriptableObject
         // state executes logic either once or until a condition is met (i.e. while, do while)
         // using an Action instead to check if states are finished
     }
+
+    public virtual void TryStopState()
+    {
+        
+    }
+
+    public virtual void StopState()
+    {
+        //
+    }
 }
