@@ -16,6 +16,7 @@ public class CharacterAgent : MonoBehaviour
     [SerializeField] private WeaponData _weapon;
 
     // variables for live tracking in-game
+    private WeaponInstance _weaponInstance;
     private float _currentHealth;
     private float _weaponTimer = 0f;    // timer for weapon cooldowns (based on weapon's rate of fire)
 
@@ -24,6 +25,13 @@ public class CharacterAgent : MonoBehaviour
     {
         _currentHealth = Stats.MaxHealth;
         OnHitTaken += DamageCharacter;
+        // create instances of weapons, which are used to track their live data (cooldowns, etc.)
+        _weaponInstance = new WeaponInstance(_weapon);
+    }
+
+    public void UseWeapon()
+    {
+        _weaponInstance.ActivateWeapon();
     }
 
     public void DamageCharacter(float incomingDamage)
