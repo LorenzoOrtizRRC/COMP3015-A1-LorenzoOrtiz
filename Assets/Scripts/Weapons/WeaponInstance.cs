@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class WeaponInstance : MonoBehaviour
 {
+    /*
     private Action OnWeaponFiringEnd;
 
     private WeaponData _weapon;
@@ -38,4 +39,5 @@ public class WeaponInstance : MonoBehaviour
         _cooldownTimer = 1f / _weapon.WeaponSpeed;
         _isFiring = false;
     }
+    */
 }

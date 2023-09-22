@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
+    /*
     [Header("References")]
     [SerializeField] private Rigidbody2D _rb;
 
@@ -55,5 +56,5 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out CharacterAgent targetHit))
             DamageTarget(targetHit);
-    }
+    }*/
 }

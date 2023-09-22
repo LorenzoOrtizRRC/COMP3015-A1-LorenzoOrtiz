@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CharacterAgent : MonoBehaviour
 {
+    /*
     // This script is responsible for keeping track of a character's live data whilst in-game.
     public Action<float> OnDamageTaken; // when health is reduced (damage taken has been calculated)
     public Action<float> OnHitTaken;    // when a hostile projectile hits this character. Takes in pre-mitigated/raw damage.
@@ -48,5 +49,5 @@ public class CharacterAgent : MonoBehaviour
     {
         OnDeath?.Invoke();
         gameObject.SetActive(false);
-    }
+    }*/
 }
