@@ -6,11 +6,10 @@ using UnityEngine;
 public class CharacterAgent : MonoBehaviour
 {
     [SerializeField, Header("References")] private WeaponInstance _weapon;
-    [SerializeField] private TargetDetector _targetDetector;
     [SerializeField, Header("Agent Variables")] private float _movementForce = 1f;
     [SerializeField] private float _rotationSpeed = 1f;
 
-    private CharacterAgent _enemy;
+    public WeaponInstance Weapon => _weapon;
 
     public void MoveAgent()
     {
