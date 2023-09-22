@@ -5,6 +5,37 @@ using UnityEngine;
 
 public class CharacterAgent : MonoBehaviour
 {
+    [SerializeField, Header("References")] private WeaponInstance _weapon;
+    [SerializeField] private TargetDetector _targetDetector;
+    [SerializeField, Header("Agent Variables")] private float _movementForce = 1f;
+    [SerializeField] private float _rotationSpeed = 1f;
+
+    private CharacterAgent _enemy;
+
+    public void MoveAgent()
+    {
+        //
+    }
+
+    public void UseWeapon()
+    {
+        //
+    }
+
+    private void ResetTarget()
+    {
+        //
+    }
+
+    public void ReceiveDamage()
+    {
+        //
+    }
+
+    public void KillCharacter()
+    {
+        Destroy(gameObject);
+    }
     /*
     // This script is responsible for keeping track of a character's live data whilst in-game.
     public Action<float> OnDamageTaken; // when health is reduced (damage taken has been calculated)

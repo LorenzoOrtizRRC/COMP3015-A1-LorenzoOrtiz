@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class WeaponInstance : MonoBehaviour
 {
+    private float _weaponRange;
+
+    public float WeaponRange => WeaponRange;
     /*
     private Action OnWeaponFiringEnd;
 
