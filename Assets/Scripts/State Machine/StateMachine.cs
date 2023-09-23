@@ -1,24 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Collections;
 
 public class StateMachine: MonoBehaviour
 {
     [SerializeField, Header("References")] private CharacterAgent _agent;
     [SerializeField] private TargetDetector _targetDetector;
+    [SerializeField] private Collider2D _wanderArea;
+    [SerializeField, Header("State Machine Variables")] private float _wanderDistanceThreshold = 0.5f;
+    [SerializeField] private float _chaseRange = 15f;
 
     private CharacterAgent _enemy;
+    private Vector2 _nextWanderDestination;
+
+    private void Start()
+    {
+        _nextWanderDestination = GetWanderAreaDestination();
+    }
 
     private void Update()
     {
         if (_enemy)
         {
+            Vector2 direction = (_enemy.transform.position - transform.position);
             float distanceFromEnemy = (_enemy.transform.position - transform.position).magnitude;
-            if (distanceFromEnemy <= _agent.Weapon.WeaponRange) _agent.UseWeapon();
+            if (distanceFromEnemy <= _agent.Weapon.WeaponRange
+                && Vector2.SignedAngle(transform.up, direction) <= 0.2f) _agent.UseWeapon();
         }
     }
 
@@ -28,10 +35,29 @@ public class StateMachine: MonoBehaviour
         {
             Vector2 direction = (_enemy.transform.position - transform.position);
             // move hostile agent if out of range
-            if (direction.magnitude > _agent.Weapon.WeaponRange) _agent.MoveAgent(direction.normalized);
+            if (direction.magnitude > _agent.Weapon.WeaponRange) _agent.MoveAgent(direction);
             // rotate agent to face target
             float angleDifference = Vector2.SignedAngle(transform.up, direction);
-            _agent.RotateAgent(angleDifference);
+            _agent.RotateAgent(direction);
         }
+        else if ((_nextWanderDestination - (Vector2)transform.position).magnitude <= _wanderDistanceThreshold)      // if agent reached wander destination, move to next one
+        {
+            //Vector2 wanderDirection = (_nextWanderDestination - (Vector2)transform.position);
+            _nextWanderDestination = GetWanderAreaDestination();
+        }
+        else
+        {
+            float angleDifference = Vector2.SignedAngle(transform.up, _nextWanderDestination);
+            _agent.RotateAgent(_nextWanderDestination - (Vector2)transform.position);
+            //_agent.MoveAgent(_nextWanderDestination - (Vector2)transform.position);
+            _agent.MoveAgent(transform.up);
+        }
+    }
+
+    private Vector2 GetWanderAreaDestination()
+    {
+        float xExtent = _wanderArea.bounds.extents.x;
+        float yExtent = _wanderArea.bounds.extents.y;
+        return new Vector2(Random.Range(-xExtent, xExtent), Random.Range(-yExtent, yExtent)) + (Vector2)_wanderArea.transform.position;
     }
 }
