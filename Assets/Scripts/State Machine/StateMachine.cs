@@ -69,4 +69,9 @@ public class StateMachine: MonoBehaviour
         return new Vector2(Random.Range(-xExtent, xExtent), Random.Range(-yExtent, yExtent)) + (Vector2)_wanderArea.transform.position;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _chaseRange / 2f);
+    }
 }

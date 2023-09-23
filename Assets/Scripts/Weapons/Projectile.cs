@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _lifetime = 1f;
 
-    private Team _currentTeam = Team.Team1;
+    private Team _currentTeam = Team.Team2;
     private float _lifeTimer = 0f;
 
     public float Damage => _damage;
@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
     public void InitializeProjectile(Team newTeam)
     {
         _currentTeam = newTeam;
+        print(_currentTeam);
     }
 
     private void Start()

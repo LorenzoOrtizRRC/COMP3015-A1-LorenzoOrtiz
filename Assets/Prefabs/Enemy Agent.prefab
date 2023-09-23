@@ -330,7 +330,7 @@ MonoBehaviour:
     type: 3}
   _projectileSpawnPoint: {fileID: 2340125221781586445}
   _rateOfFire: 0.5
-  _weaponRange: 6
+  _weaponRange: 7
 --- !u!1 &5372942047958648850
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,7 +555,7 @@ MonoBehaviour:
   _health: 5
   _movementForce: 25
   _rotationSpeed: 225
-  _currentTeam: 1
+  _currentTeam: 2
 --- !u!114 &93174341985190355
 MonoBehaviour:
   m_ObjectHideFlags: 0

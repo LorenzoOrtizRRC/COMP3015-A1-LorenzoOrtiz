@@ -9,6 +9,7 @@ public class CameraFollower : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!_objectToFollow) return;
         transform.position = new Vector3(_objectToFollow.transform.position.x, _objectToFollow.transform.position.y, -10f);
     }
 }

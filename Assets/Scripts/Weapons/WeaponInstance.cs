@@ -24,9 +24,15 @@ public class WeaponInstance : MonoBehaviour
     {
         if (Time.time >= _timer)
         {
-            Instantiate(_projectilePrefab, _projectileSpawnPoint.position, transform.rotation);
-            _projectilePrefab.GetComponent<Projectile>().InitializeProjectile(_currentTeam);
+            GameObject createdProjectile = Instantiate(_projectilePrefab, _projectileSpawnPoint.position, transform.rotation);
+            createdProjectile.GetComponent<Projectile>().InitializeProjectile(_currentTeam);
             _timer = Time.time + _rateOfFire;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _weaponRange / 2f);
     }
 }
