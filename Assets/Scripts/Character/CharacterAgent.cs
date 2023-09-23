@@ -15,6 +15,7 @@ public class CharacterAgent : MonoBehaviour
     [SerializeField] private Team _currentTeam = Team.Team1;
 
     public WeaponInstance Weapon => _weapon;
+    public Team CurrentTeam => _currentTeam;
 
     private void Start()
     {
@@ -42,12 +43,7 @@ public class CharacterAgent : MonoBehaviour
 
     public void UseWeapon()
     {
-        //
-    }
-
-    private void ResetTarget()
-    {
-        //
+        _weapon.FireProjectile();
     }
 
     public void ReceiveDamage(float receivedDamage)
@@ -63,7 +59,7 @@ public class CharacterAgent : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Projectile hitProjectile = collision.transform.GetComponent<Projectile>();
-        if (hitProjectile)
+        if (hitProjectile && hitProjectile.CurrentTeam != CurrentTeam)
         {
             ReceiveDamage(hitProjectile.Damage);
         }

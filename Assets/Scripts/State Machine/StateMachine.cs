@@ -16,6 +16,7 @@ public class StateMachine: MonoBehaviour
     private void Start()
     {
         _nextWanderDestination = GetWanderAreaDestination();
+        _targetDetector.OnPotentialTargetAcquired += EvaluateTarget;
     }
 
     private void Update()
@@ -34,6 +35,11 @@ public class StateMachine: MonoBehaviour
         if (_enemy)
         {
             Vector2 direction = (_enemy.transform.position - transform.position);
+            if (direction.magnitude >= _chaseRange)
+            {
+                _enemy = null;
+                return;
+            }
             // move hostile agent if out of range
             if (direction.magnitude > _agent.Weapon.WeaponRange) _agent.MoveAgent(direction);
             // rotate agent to face target
@@ -53,6 +59,10 @@ public class StateMachine: MonoBehaviour
             _agent.MoveAgent(transform.up);
         }
     }
+    public void EvaluateTarget(CharacterAgent potentialTarget)
+    {
+        if (potentialTarget && potentialTarget.CurrentTeam != _agent.CurrentTeam && !_enemy) _enemy = potentialTarget;
+    }
 
     private Vector2 GetWanderAreaDestination()
     {
@@ -60,4 +70,5 @@ public class StateMachine: MonoBehaviour
         float yExtent = _wanderArea.bounds.extents.y;
         return new Vector2(Random.Range(-xExtent, xExtent), Random.Range(-yExtent, yExtent)) + (Vector2)_wanderArea.transform.position;
     }
+
 }

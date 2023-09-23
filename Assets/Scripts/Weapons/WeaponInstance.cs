@@ -8,12 +8,12 @@ public class WeaponInstance : MonoBehaviour
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private Transform _projectileSpawnPoint;
     [SerializeField] private float _rateOfFire = 1f;     // Projectiles per 1 real second. Formula: (1 second / projectiles per second), where assigned value is the real seconds delay between projectile spawning.
+    [SerializeField] private float _weaponRange = 8f;
 
     private Team _currentTeam = Team.Team1;
-    private float _weaponRange;
     private float _timer = 0;
 
-    public float WeaponRange => WeaponRange;
+    public float WeaponRange => _weaponRange;
 
     public void InitializeWeapon(Team newTeam)
     {
