@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine: MonoBehaviour
+public class NPC: MonoBehaviour
 {
+    // controls agents
     [SerializeField, Header("References")] private CharacterAgent _agent;
     [SerializeField] private TargetDetector _targetDetector;
     [SerializeField] private Collider2D _wanderArea;

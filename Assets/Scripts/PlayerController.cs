@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         // disable any statemachines-related components on player ship. this allows the player to be any ship that AI uses.
-        StateMachine stateMachine = _playerAgent.GetComponent<StateMachine>();
+        NPC stateMachine = _playerAgent.GetComponent<NPC>();
         if (stateMachine) stateMachine.enabled = false;
         TargetDetector detector = _playerAgent.GetComponentInChildren<TargetDetector>();
         if (detector) detector.gameObject.SetActive(false);
