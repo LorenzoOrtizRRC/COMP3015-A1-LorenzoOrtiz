@@ -47,6 +47,6 @@ TagManager:
   - name: Projectile
     uniqueID: 2394159237
     locked: 0
-  - name: Foreground
-    uniqueID: 3335954737
+  - name: Body
+    uniqueID: 557914955
     locked: 0

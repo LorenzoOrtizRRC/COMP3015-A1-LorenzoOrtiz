@@ -19,7 +19,19 @@ public class StateMachine: MonoBehaviour
         {
             float distanceFromEnemy = (_enemy.transform.position - transform.position).magnitude;
             if (distanceFromEnemy <= _agent.Weapon.WeaponRange) _agent.UseWeapon();
-            else _agent.MoveAgent();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_enemy)
+        {
+            Vector2 direction = (_enemy.transform.position - transform.position);
+            // move hostile agent if out of range
+            if (direction.magnitude > _agent.Weapon.WeaponRange) _agent.MoveAgent(direction.normalized);
+            // rotate agent to face target
+            float angleDifference = Vector2.SignedAngle(transform.up, direction);
+            _agent.RotateAgent(angleDifference);
         }
     }
 }

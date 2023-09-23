@@ -2,18 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GridBrushBase;
 
 public class CharacterAgent : MonoBehaviour
 {
+    [SerializeField] private Rigidbody2D _rb;
     [SerializeField, Header("References")] private WeaponInstance _weapon;
-    [SerializeField, Header("Agent Variables")] private float _movementForce = 1f;
-    [SerializeField] private float _rotationSpeed = 1f;
+    [SerializeField, Header("Agent Variables")] private float _movementForce = 10f;
+    [SerializeField] private float _rotationSpeed = 180f;
 
     public WeaponInstance Weapon => _weapon;
 
-    public void MoveAgent()
+    public void MoveAgent(Vector2 direction)
     {
-        //
+        _rb.AddForce(direction.normalized * _movementForce);
+    }
+
+    public void RotateAgent(float angleDifference)
+    {
+        //float rotationDirection = angleDifference > 0f ? 1f : -1f;
+        //float absClampValue = Mathf.Abs(angleDifference);
+        //transform.Rotate(new Vector3(0f, 0f, 1 * Mathf.Clamp(rotationDirection * 180f * Time.fixedDeltaTime, -absClampValue, absClampValue)));
+        //_rb.MoveRotation(degrees);
+        // Called in FixedUpdate. Rotates towards angle using a rotation speed.
+        float rotationDirection = angleDifference > 0f ? 1f : -1f;
+        float degreesToRotate = Mathf.Clamp(rotationDirection * _rotationSpeed * Time.fixedDeltaTime, -angleDifference, angleDifference);
+        transform.rotation *= Quaternion.AngleAxis(degreesToRotate, Vector3.forward);
     }
 
     public void UseWeapon()
