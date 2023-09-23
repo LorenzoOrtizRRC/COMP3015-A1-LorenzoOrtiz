@@ -48,14 +48,12 @@ public class StateMachine: MonoBehaviour
         }
         else if ((_nextWanderDestination - (Vector2)transform.position).magnitude <= _wanderDistanceThreshold)      // if agent reached wander destination, move to next one
         {
-            //Vector2 wanderDirection = (_nextWanderDestination - (Vector2)transform.position);
             _nextWanderDestination = GetWanderAreaDestination();
         }
         else
         {
             float angleDifference = Vector2.SignedAngle(transform.up, _nextWanderDestination);
             _agent.RotateAgent(_nextWanderDestination - (Vector2)transform.position);
-            //_agent.MoveAgent(_nextWanderDestination - (Vector2)transform.position);
             _agent.MoveAgent(transform.up);
         }
     }

@@ -29,10 +29,6 @@ public class CharacterAgent : MonoBehaviour
 
     public void RotateAgent(Vector2 direction)
     {
-        //float rotationDirection = angleDifference > 0f ? 1f : -1f;
-        //float absClampValue = Mathf.Abs(angleDifference);
-        //transform.Rotate(new Vector3(0f, 0f, 1 * Mathf.Clamp(rotationDirection * 180f * Time.fixedDeltaTime, -absClampValue, absClampValue)));
-        //_rb.MoveRotation(degrees);
         // Called in FixedUpdate. Rotates towards angle using a rotation speed.
         float angleDifference = Vector2.SignedAngle(transform.up, direction);
         float rotationDirection = angleDifference > 0f ? 1f : -1f;
