@@ -18,7 +18,6 @@ public class Projectile : MonoBehaviour
     public void InitializeProjectile(Team newTeam)
     {
         _currentTeam = newTeam;
-        print(_currentTeam);
     }
 
     private void Start()
