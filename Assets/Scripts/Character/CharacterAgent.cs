@@ -2,16 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GridBrushBase;
+
+public enum Team { Team1 = 1, Team2 = 2 }
 
 public class CharacterAgent : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField, Header("References")] private WeaponInstance _weapon;
-    [SerializeField, Header("Agent Variables")] private float _movementForce = 10f;
+    [SerializeField, Header("Agent Variables")] private float _health;
+    [SerializeField] private float _movementForce = 10f;
     [SerializeField] private float _rotationSpeed = 180f;
+    [SerializeField] private Team _currentTeam = Team.Team1;
 
     public WeaponInstance Weapon => _weapon;
+
+    private void Start()
+    {
+        _weapon.InitializeWeapon(_currentTeam);
+    }
 
     public void MoveAgent(Vector2 direction)
     {
@@ -42,58 +50,22 @@ public class CharacterAgent : MonoBehaviour
         //
     }
 
-    public void ReceiveDamage()
+    public void ReceiveDamage(float receivedDamage)
     {
-        //
+        _health = Mathf.Clamp(_health - receivedDamage, 0f, Mathf.Infinity);
+        if (_health == 0) KillCharacter();
     }
 
     public void KillCharacter()
     {
         Destroy(gameObject);
     }
-    /*
-    // This script is responsible for keeping track of a character's live data whilst in-game.
-    public Action<float> OnDamageTaken; // when health is reduced (damage taken has been calculated)
-    public Action<float> OnHitTaken;    // when a hostile projectile hits this character. Takes in pre-mitigated/raw damage.
-    public Action OnDeath;  // when character dies
-
-    public CharacterStats Stats => _stats;
-    public WeaponData Weapon => _weapon;
-    [SerializeField] private CharacterStats _stats;
-    [SerializeField] private WeaponData _weapon;
-
-    // variables for live tracking in-game
-    private WeaponInstance _weaponInstance;
-    private float _currentHealth;
-    private float _weaponTimer = 0f;    // timer for weapon cooldowns (based on weapon's rate of fire)
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        _currentHealth = Stats.MaxHealth;
-        OnHitTaken += DamageCharacter;
-        // create instances of weapons, which are used to track their live data (cooldowns, etc.)
-        _weaponInstance = new WeaponInstance(_weapon);
-    }
-
-    public void UseWeapon()
-    {
-        _weaponInstance.ActivateWeapon();
-    }
-
-    public void DamageCharacter(float incomingDamage)
-    {
-        float damageTaken = Mathf.Clamp(incomingDamage - Stats.Armor, 1f, Mathf.Infinity);  // current damage formula
-        if ((_currentHealth -= damageTaken) <= 0f)
+        Projectile hitProjectile = collision.transform.GetComponent<Projectile>();
+        if (hitProjectile)
         {
-            OnDamageTaken(damageTaken);
-            KillCharacter();
+            ReceiveDamage(hitProjectile.Damage);
         }
     }
-
-    private void KillCharacter()
-    {
-        OnDeath?.Invoke();
-        gameObject.SetActive(false);
-    }*/
 }
